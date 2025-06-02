@@ -1,0 +1,16 @@
+import { ObjectId } from "mongodb";
+import { connectDB } from "@/util/database.js"
+
+export default async function Edit() {
+    let db = (await connectDB).db('next-practice');
+    let result = await db.collection('post').findOne({_id : new ObjectId(props.params.id)})
+    console.log(props.id)
+    return (
+        <div>
+            <h4>수정페이지임</h4>
+            <h4>{result.title}</h4>
+            <p>{result.content}</p>
+            <button>수정하기</button>
+        </div>
+    )
+}
