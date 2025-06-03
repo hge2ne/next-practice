@@ -1,16 +1,18 @@
 import { ObjectId } from "mongodb";
 import { connectDB } from "@/util/database.js"
 
-export default async function Edit() {
+export default async function Edit(props) {
     let db = (await connectDB).db('next-practice');
     let result = await db.collection('post').findOne({_id : new ObjectId(props.params.id)})
-    console.log(props.id)
-    return (
-        <div>
-            <h4>수정페이지임</h4>
-            <h4>{result.title}</h4>
-            <p>{result.content}</p>
-            <button>수정하기</button>
-        </div>
-    )
+   return (
+    <div className="p-20">
+        <h4>수정페이지임</h4>
+        <form action="/api/post/edit"method="post"> {/*//post,get 요청방법*/}
+            <input name="title" defaultValue={result.title}></input>
+            <input name="content" defaultValue={result.content}></input>
+            <input name="_id" defaultValue={result._id.toString()}></input>
+            <button type="submit">수정</button>
+        </form>
+    </div>
+   )
 }
